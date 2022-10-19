@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { Rating } from './entities/rating.entity';
 
@@ -21,7 +20,7 @@ export class RatingsService {
   }
 
   findOne(id: number) {
-    return this.ratingsRepository.findOne(id);
+    return this.ratingsRepository.findByIds([id]);
   }
 
   update(id: number, updateRatingDto: UpdateRatingDto) {

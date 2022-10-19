@@ -1,70 +1,42 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  HttpStatus,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { RatingsService } from './ratings.service';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
-import { Rating } from './entities/rating.entity';
-import { response } from 'express';
+import { RatingsService } from './ratings.service';
 
 @Controller('ratings')
 export class RatingsController {
   constructor(private readonly ratingsService: RatingsService) {}
 
   @Post()
-  create(@Body() rating: Rating) {
-    const newRating = this.ratingsService.create(rating);
-
-    return response.status(HttpStatus.CREATED).json({
-      newRating,
-      message: 'Rating created successfully',
-    });
+  create(@Body() createRatingDto: CreateRatingDto) {
+    return this.ratingsService.create(createRatingDto);
   }
 
   @Get()
   findAll() {
-    const ratings = this.ratingsService.findAll();
-
-    return response.status(HttpStatus.OK).json({
-      ratings,
-      message: 'Ratings retrieved successfully',
-    });
+    return this.ratingsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    const rating = this.ratingsService.findOne(+id);
-
-    return response.status(HttpStatus.OK).json({
-      rating,
-      message: 'Rating retrieved successfully',
-    });
+  findOne(@Param('id') id: number) {
+    return this.ratingsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRatingDto: UpdateRatingDto) {
-    const rating = this.ratingsService.update(+id, updateRatingDto);
-
-    return response.status(HttpStatus.OK).json({
-      rating,
-      message: 'Rating updated successfully',
-    });
+  update(@Param('id') id: number, @Body() updateRatingDto: UpdateRatingDto) {
+    return this.ratingsService.update(id, updateRatingDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    const formerRating = this.ratingsService.remove(+id);
-
-    return response.status(HttpStatus.OK).json({
-      formerRating: formerRating,
-      message: 'Rating deleted successfully',
-    });
+  remove(@Param('id') id: number) {
+    return this.ratingsService.remove(id);
   }
 }

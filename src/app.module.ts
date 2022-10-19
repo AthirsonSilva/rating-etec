@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { RatingsController } from './ratings/ratings.controller';
-import { RatingsService } from './ratings/ratings.service';
-import { RatingsModule } from './ratings/ratings.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Rating } from './ratings/entities/rating.entity';
+import { RatingsModule } from './ratings/ratings.module';
 
 @Module({
   imports: [
@@ -12,14 +10,14 @@ import { Rating } from './ratings/entities/rating.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: '' || '@Potter4',
       database: 'dbratings',
       entities: [Rating],
       synchronize: true,
     }),
     RatingsModule,
   ],
-  controllers: [RatingsController],
-  providers: [RatingsService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
